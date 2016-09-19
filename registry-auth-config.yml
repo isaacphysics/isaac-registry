@@ -1,0 +1,24 @@
+server:
+  addr: ":80"
+
+token:
+  certificate: "/certs/ssl.crt"
+  key: "/certs/ssl.key"
+  issuer: "Isaac"  # Must match issuer in the Registry config.
+  expiration: 900
+
+users:
+  # Password is specified as a BCrypt hash. Use htpasswd -nB <username> to generate.
+  "ipd21":
+    password: "$2y$05$B2qKP2KZqvX9bGkz8Z8dguKzdQ8R/NLkiCeZiCGdHiCSmZ0bX/XeG"
+    
+  "": {} # Allow anonymous access. You won't be able to do much unless you're on localhost
+
+acl:
+  - match: {ip: "127.0.0.1/12"}
+    actions: ["pull"]
+    comment: "Allow pulling from docker (IPv4)"
+  - match: {account: "/ipd21/"}
+    actions: ["*"]
+    comment: "Ian has full access to everything."
+  # Access is denied by default.

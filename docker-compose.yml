@@ -1,0 +1,35 @@
+
+version: '2'
+
+services:
+
+  registry:
+    image: registry:2
+    container_name: registry
+    environment:
+      REGISTRY_HTTP_ADDR: ":80"
+      REGISTRY_AUTH: token
+      REGISTRY_AUTH_TOKEN_REALM: https://docker.isaacscience.org/auth
+      REGISTRY_AUTH_TOKEN_SERVICE: Docker registry
+      REGISTRY_AUTH_TOKEN_ISSUER: Isaac
+      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /certs/ssl.crt
+    volumes:
+      - "/local/data/registry:/var/lib/registry:rw"
+      - "/local/data/certificates/live/dev.isaacphysics.org/fullchain.pem:/certs/ssl.crt:ro"
+
+
+  # See https://github.com/docker/distribution/blob/master/docs/spec/auth/token.md
+  registry-auth:
+    image: cesanta/docker_auth:stable
+    container_name: registry-auth
+    volumes:
+      - "./registry-auth-config.yml:/config/auth_config.yml:ro"
+      - "/local/data/certificates/live/dev.isaacphysics.org/fullchain.pem:/certs/ssl.crt:ro"
+      - "/local/data/certificates/live/dev.isaacphysics.org/privkey.pem:/certs/ssl.key:ro"
+networks:
+  default:
+    external:
+      name: isaac
+
+
+
