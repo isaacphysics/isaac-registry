@@ -4,6 +4,7 @@ version: '2'
 services:
 
   registry:
+    restart: always
     image: registry:2
     container_name: registry
     environment:
@@ -20,6 +21,7 @@ services:
 
   # See https://github.com/docker/distribution/blob/master/docs/spec/auth/token.md
   registry-auth:
+    restart: always
     image: cesanta/docker_auth:stable
     container_name: registry-auth
     volumes:
