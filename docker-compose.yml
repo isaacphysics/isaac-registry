@@ -16,7 +16,7 @@ services:
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /certs/ssl.crt
     volumes:
       - "/local/data/registry:/var/lib/registry:rw"
-      - "/local/data/certificates/live/dev.isaacphysics.org/fullchain.pem:/certs/ssl.crt:ro"
+      - "/local/data/certificates/live/isaacphysics.org/fullchain.pem:/certs/ssl.crt:ro"
 
 
   # See https://github.com/docker/distribution/blob/master/docs/spec/auth/token.md
@@ -26,8 +26,8 @@ services:
     container_name: registry-auth
     volumes:
       - "./registry-auth-config.yml:/config/auth_config.yml:ro"
-      - "/local/data/certificates/live/dev.isaacphysics.org/fullchain.pem:/certs/ssl.crt:ro"
-      - "/local/data/certificates/live/dev.isaacphysics.org/privkey.pem:/certs/ssl.key:ro"
+      - "/local/data/certificates/live/isaacphysics.org/fullchain.pem:/certs/ssl.crt:ro"
+      - "/local/data/certificates/live/isaacphysics.org/privkey.pem:/certs/ssl.key:ro"
 networks:
   default:
     external:

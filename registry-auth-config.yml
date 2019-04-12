@@ -1,5 +1,6 @@
 server:
   addr: ":80"
+  real_ip_header: "X-Forwarded-For"
 
 token:
   certificate: "/certs/ssl.crt"
@@ -18,6 +19,9 @@ acl:
   - match: {ip: "127.0.0.1/12"}
     actions: ["pull"]
     comment: "Allow pulling from docker (IPv4)"
+  - match: {ip: "128.232.0.0/16"}
+    actions: ["*"]
+    comment: "Anything in the CL has full access to everything"
   - match: {account: "/ipd21/"}
     actions: ["*"]
     comment: "Ian has full access to everything."
